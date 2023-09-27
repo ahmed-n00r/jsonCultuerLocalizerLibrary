@@ -1,0 +1,19 @@
+﻿@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultures = options.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+<div>
+    <form method="post" asp-controller="Home" asp-action="SetLanguage" asp-route-returnUrl="@returnUrl">
+        <select name="culture" 
+            asp-for="@requestCulture.RequestCulture.UICulture.Name"
+            asp-items="cultures"
+            onchange="this.form.submit();"
+        >
+            @*don't forget change action and controller if you don't use Home controller*@
+        </select>
+    </form>
+</div>
