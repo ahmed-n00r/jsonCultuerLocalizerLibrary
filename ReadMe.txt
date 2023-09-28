@@ -5,6 +5,7 @@
 
 builder.Services.AddSingleton<IStringLocalizerFactory, jsonStringLocalizerFactory>();
 
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMvc()
     .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization(option =>
