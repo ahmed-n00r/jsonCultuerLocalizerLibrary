@@ -71,10 +71,9 @@ namespace jsonCultuerLocalizerLibrary
 
         private string getString(string key)
         {
-            var filePath = $"\\jsonCultuerLocalizerLibrary\\Resources\\{Thread.CurrentThread.CurrentCulture.Name}.json";
-            var path = Environment.CurrentDirectory.Substring(0, Environment.CurrentDirectory.LastIndexOf("\\")) + filePath;
+            var path = $"wwwroot/Resources/{Thread.CurrentThread.CurrentCulture.Name}.json";
             var fullFilePath = Path.GetFullPath(path);
-
+            var t = Environment.CurrentDirectory;
 
             if (File.Exists(fullFilePath))
             {

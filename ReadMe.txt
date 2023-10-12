@@ -7,33 +7,30 @@ builder.Services.AddSingleton<IStringLocalizerFactory, jsonStringLocalizerFactor
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddMvc()
-    .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix)
+    .AddViewLocalization(Microsoft.AspNetCore.Mvc.Razor.LanguageViewLocationExpanderFormat.Suffix) \\this part is not required in api
     .AddDataAnnotationsLocalization(option =>
     {
         option.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(jsonStringLocalizerFactory));
     });
 
+var supportedLanguage = new[] { "en-US", "ar-EG", "de-DE" }; //this array of language
+
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    var supportedCultures = new[]
-    {
-        new CultureInfo("en-US"),
-        new CultureInfo("ar-EG"),
-        new CultureInfo("de-DE")
-    }; //this array of language
+    var supportedCultures = supportedLanguage.Select(c => new CultureInfo(c)).ToList();
 
-    //options.DefaultRequestCulture = new RequestCulture(culture: supportedCultures[0], uiCulture: supportedCultures[0]);
+    options.DefaultRequestCulture = new RequestCulture(culture: supportedCultures[0], uiCulture: supportedCultures[0]);
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
-}); */
+});
+*/
 
 * add middelware after (app.UseRouting();)
 /*
-var supportedCultures = new[] { "en-US", "ar-EG", "de-DE" }; //this array of language
 var localizationOptions = new RequestLocalizationOptions()
-    //.SetDefaultCulture(supportedCultures[0])
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures);
+    .SetDefaultCulture(supportedLanguage[0])
+    .AddSupportedCultures(supportedLanguage)
+    .AddSupportedUICultures(supportedLanguage); //this part is not required in api
 
 app.UseRequestLocalization(localizationOptions);
 */
